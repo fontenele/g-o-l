@@ -7,42 +7,63 @@
             text-align: center;
             margin: 10px;
             background-color: #000;
+            color: #FFFFFF;
+        }
+
+        #grid {
+            cursor: pointer;
+        }
+
+        #tick {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
+<button id="start">START</button>
+TICK: <span id="tick">0</span><br/><br/>
 <canvas id="grid" width="900" height="900"></canvas>
 
+<script src="gol.js"></script>
 <script>
-    var cnv = document.getElementById('grid');
-    var ctx = cnv.getContext('2d');
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, 900, 900);
+    var ticks = 0;
+    var gol;
 
-    function drawGrid(width, height) {
-        ctx.beginPath();
-        for (var x = 0; x <= width; x = x + 10) {
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, width);
-        }
-        for (var y = 0; y <= height; y = y + 10) {
-            ctx.moveTo(0, y);
-            ctx.lineTo(height, y);
-        }
-        ctx.strokeStyle = '#000000';
-        ctx.stroke();
+    function initGame() {
+        gol = new GOL(document.getElementById('grid'), {
+            width: 900,
+            height: 900,
+            squareWidth: 20,
+            squareHeight: 20
+        });
     }
 
-    function fillRect(x, y, color) {
-        ctx.fillStyle = color || '#000000';
-        ctx.fillRect(((x - 1) * 10) + 1, ((y - 1) * 10) + 1, 8, 8);
+    function template1() {
+        gol.fillRect(1, 4);
+        gol.fillRect(2, 3);
+        gol.fillRect(3, 3);
+        gol.fillRect(3, 4);
+        gol.fillRect(3, 5);
     }
 
-    drawGrid(900, 900);
-    fillRect(2, 2);
-    fillRect(2, 3);
-    fillRect(2, 4);
+
+    document.getElementById('start').addEventListener('click', function (event) {
+        if (event.target.innerHTML === 'START') {
+            event.target.innerHTML = 'STOP';
+            ticks = 0;
+            document.getElementById('tick').innerHTML = ticks;
+            gol.start(1000, function () {
+                document.getElementById('tick').innerHTML = ++ticks;
+            });
+            return;
+        }
+        event.target.innerHTML = 'START';
+        gol.stop();
+    });
+
+    initGame();
+    template1();
 </script>
 </body>
 </html>
