@@ -23,7 +23,23 @@
 
 <button id="start">START</button>
 TICK: <span id="tick">0</span><br/><br/>
+
 <canvas id="grid" width="800" height="800"></canvas>
+<br/>
+<br/>
+
+<select id="template">
+    <option value="glider">Glider</option>
+    <option value="small-exploder">Small Exploder</option>
+    <option value="exploder">Exploder</option>
+    <option value="ten-row">10 Cell Row</option>
+    <option value="lighweight-spaceship">Lighweight spaceship</option>
+    <option value="tumbler">Tumbler</option>
+    <option value="gosper-glider-gun">Gosper Glider Gun</option>
+</select>
+<input type="text" id="add-x" value="20" placeholder="X" style="width: 40px;" />
+<input type="text" id="add-y" value="20" placeholder="Y" style="width: 40px;" />
+<button id="add">ADD</button>
 
 <script src="gol.js"></script>
 <script>
@@ -34,12 +50,12 @@ TICK: <span id="tick">0</span><br/><br/>
         gol = new GOL(document.getElementById('grid'), {
             width: 800,
             height: 800,
-            squareWidth: 20,
-            squareHeight: 20
+            squareWidth: 6,
+            squareHeight: 6
         });
     }
 
-    function template1() {
+    function template() {
         gol.fillRect(2, 2);
         gol.fillRect(3, 2);
         gol.fillRect(4, 2);
@@ -48,12 +64,138 @@ TICK: <span id="tick">0</span><br/><br/>
     }
 
 
+    document.getElementById('add').addEventListener('click', function (event) {
+        var template = document.getElementById('template').value;
+        var x = parseInt(document.getElementById('add-x').value);
+        var y = parseInt(document.getElementById('add-y').value);
+        if (!x || !y) {
+            alert('Please inform x and y values.');
+            return;
+        }
+        switch (template) {
+            case 'glider':
+                gol.fillRect(x, y);
+                gol.fillRect(x + 1, y);
+                gol.fillRect(x + 2, y);
+                gol.fillRect(x + 2, y - 1);
+                gol.fillRect(x + 1, y - 2);
+                break;
+            case 'small-exploder':
+                gol.fillRect(x + 1, y - 1);
+                gol.fillRect(x, y);
+                gol.fillRect(x + 1, y);
+                gol.fillRect(x + 2, y);
+                gol.fillRect(x, y + 1);
+                gol.fillRect(x + 2, y + 1);
+                gol.fillRect(x + 1, y + 2);
+                break;
+            case 'exploder':
+                gol.fillRect(x, y);
+                gol.fillRect(x, y + 1);
+                gol.fillRect(x, y + 2);
+                gol.fillRect(x, y + 3);
+                gol.fillRect(x, y + 4);
+                gol.fillRect(x + 2, y);
+                gol.fillRect(x + 2, y + 4);
+                gol.fillRect(x + 4, y);
+                gol.fillRect(x + 4, y + 1);
+                gol.fillRect(x + 4, y + 2);
+                gol.fillRect(x + 4, y + 3);
+                gol.fillRect(x + 4, y + 4);
+                break;
+            case 'ten-row':
+                gol.fillRect(x, y);
+                for (var i = 1; i < 10; i++) {
+                    gol.fillRect(x + i, y);
+                }
+                break;
+            case 'lighweight-spaceship':
+                gol.fillRect(x, y);
+                gol.fillRect(x - 1, y + 1);
+                gol.fillRect(x - 1, y + 3);
+                gol.fillRect(x + 1, y);
+                gol.fillRect(x + 2, y);
+                gol.fillRect(x + 3, y);
+                gol.fillRect(x + 3, y + 1);
+                gol.fillRect(x + 3, y + 2);
+                gol.fillRect(x + 2, y + 3);
+                break;
+            case 'tumbler':
+                gol.fillRect(x, y);
+                gol.fillRect(x, y + 1);
+                gol.fillRect(x + 1, y);
+                gol.fillRect(x + 1, y + 1);
+                gol.fillRect(x + 3, y);
+                gol.fillRect(x + 3, y + 1);
+                gol.fillRect(x + 4, y);
+                gol.fillRect(x + 4, y + 1);
+                gol.fillRect(x + 1, y + 2);
+                gol.fillRect(x + 1, y + 3);
+                gol.fillRect(x + 1, y + 4);
+                gol.fillRect(x + 3, y + 2);
+                gol.fillRect(x + 3, y + 3);
+                gol.fillRect(x + 3, y + 4);
+                gol.fillRect(x + 4, y + 5);
+                gol.fillRect(x + 5, y + 5);
+                gol.fillRect(x - 1, y + 5);
+                gol.fillRect(x, y + 5);
+                gol.fillRect(x - 1, y + 4);
+                gol.fillRect(x - 1, y + 3);
+                gol.fillRect(x + 5, y + 4);
+                gol.fillRect(x + 5, y + 3);
+                break;
+            case 'gosper-glider-gun':
+                gol.fillRect(x, y);
+                gol.fillRect(x + 1, y);
+                gol.fillRect(x, y + 1);
+                gol.fillRect(x + 1, y + 1);
+
+                gol.fillRect(x + 9, y);
+                gol.fillRect(x + 10, y);
+                gol.fillRect(x + 10, y + 1);
+                gol.fillRect(x + 9, y + 2);
+                gol.fillRect(x + 8, y + 2);
+                gol.fillRect(x + 8, y + 1);
+
+                gol.fillRect(x + 16, y + 2);
+                gol.fillRect(x + 17, y + 2);
+                gol.fillRect(x + 16, y + 3);
+                gol.fillRect(x + 16, y + 4);
+                gol.fillRect(x + 18, y + 3);
+
+                gol.fillRect(x + 23, y - 2);
+                gol.fillRect(x + 24, y - 2);
+                gol.fillRect(x + 24, y - 1);
+                gol.fillRect(x + 23, y);
+                gol.fillRect(x + 22, y);
+                gol.fillRect(x + 22, y - 1);
+
+                gol.fillRect(x + 34, y - 1);
+                gol.fillRect(x + 34, y - 2);
+                gol.fillRect(x + 35, y - 1);
+                gol.fillRect(x + 35, y - 2);
+
+                gol.fillRect(x + 36, y + 5);
+                gol.fillRect(x + 37, y + 6);
+                gol.fillRect(x + 35, y + 5);
+                gol.fillRect(x + 35, y + 6);
+                gol.fillRect(x + 35, y + 7);
+
+                gol.fillRect(x + 24, y + 10);
+                gol.fillRect(x + 24, y + 11);
+                gol.fillRect(x + 25, y + 10);
+                gol.fillRect(x + 26, y + 10);
+                gol.fillRect(x + 25, y + 12);
+                break;
+        }
+        console.log(template, x, y);
+    });
     document.getElementById('start').addEventListener('click', function (event) {
         if (event.target.innerHTML === 'START') {
             event.target.innerHTML = 'STOP';
             ticks = 0;
             document.getElementById('tick').innerHTML = ticks;
-            gol.start(100, function () {
+            gol.start(10, function () {
                 document.getElementById('tick').innerHTML = ++ticks;
             });
             return;
