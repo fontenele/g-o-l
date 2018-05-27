@@ -1,0 +1,1 @@
+Just open the index.html in your browser

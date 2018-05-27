@@ -23,7 +23,7 @@
 
 <button id="start">START</button>
 TICK: <span id="tick">0</span><br/><br/>
-<canvas id="grid" width="900" height="900"></canvas>
+<canvas id="grid" width="800" height="800"></canvas>
 
 <script src="gol.js"></script>
 <script>
@@ -32,19 +32,19 @@ TICK: <span id="tick">0</span><br/><br/>
 
     function initGame() {
         gol = new GOL(document.getElementById('grid'), {
-            width: 900,
-            height: 900,
+            width: 800,
+            height: 800,
             squareWidth: 20,
             squareHeight: 20
         });
     }
 
     function template1() {
-        gol.fillRect(1, 4);
-        gol.fillRect(2, 3);
-        gol.fillRect(3, 3);
+        gol.fillRect(2, 2);
+        gol.fillRect(3, 2);
+        gol.fillRect(4, 2);
+        gol.fillRect(4, 3);
         gol.fillRect(3, 4);
-        gol.fillRect(3, 5);
     }
 
 
@@ -53,7 +53,7 @@ TICK: <span id="tick">0</span><br/><br/>
             event.target.innerHTML = 'STOP';
             ticks = 0;
             document.getElementById('tick').innerHTML = ticks;
-            gol.start(1000, function () {
+            gol.start(100, function () {
                 document.getElementById('tick').innerHTML = ++ticks;
             });
             return;
@@ -63,7 +63,7 @@ TICK: <span id="tick">0</span><br/><br/>
     });
 
     initGame();
-    template1();
+    // template1();
 </script>
 </body>
 </html>
